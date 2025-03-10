@@ -1,43 +1,64 @@
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShipFire : MonoBehaviourPun
 {
+    [SerializeField] Slider fireRateSlider;
     [SerializeField] GameObject ammoPrefab;
+    [SerializeField] Transform bulletContainer;
     [SerializeField] float ammoSpeed = 10;
     [SerializeField] float ammoDuration = 2;
-    [SerializeField] Transform bulletContainer;
     [SerializeField] Ammo ammo;
     [SerializeField] SetShip setShip;
     public bool isFiring;
     private Coroutine fireCoroutine;
     private float lastFireTime = 0f;
+    private float fireCooldown;
 
     void Start()
     {
         var BulletObject = GameObject.Find("BulletContainer");
         bulletContainer = BulletObject.transform;
+
+        fireCooldown = 1 / setShip.fireRate; 
+        fireRateSlider.value = 0; 
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (photonView.IsMine)
         {
             if (ammo.currentAmmo > 0)
+            {
+                float elapsedTime = Time.time - lastFireTime;
+                fireRateSlider.maxValue = fireCooldown; 
+                fireRateSlider.value = Mathf.Clamp(elapsedTime, 0, fireCooldown);
                 Fire();
+            }
             else
+            {
+                float elapsedTime = Time.time - lastFireTime;
+                fireRateSlider.maxValue = setShip.reloadSpeed; 
+                fireRateSlider.value = Mathf.Clamp(elapsedTime, 0, setShip.reloadSpeed);
                 ammo.ReloadAmmo();
+            }
+
+            if (Input.GetKeyDown(KeyCode.R) && ammo.currentAmmo < setShip.maxAmmo)
+            {
+                ammo.ReloadAmmo();
+            }
         }
     }
 
     void Fire()
     {
-        if (isFiring && fireCoroutine == null && ammo.currentAmmo > 0) // Mermi kontrolü eklendi
+        if (isFiring && fireCoroutine == null && ammo.currentAmmo > 0) 
         {
             fireCoroutine = StartCoroutine(FireContinuously());
         }
-        else if ((!isFiring || ammo.currentAmmo <= 0) && fireCoroutine != null) // Mermi kontrolü eklendi
+        else if ((!isFiring || ammo.currentAmmo <= 0) && fireCoroutine != null) 
         {
             StopCoroutine(fireCoroutine);
             fireCoroutine = null;
@@ -46,20 +67,19 @@ public class ShipFire : MonoBehaviourPun
 
     IEnumerator FireContinuously()
     {
-        while (isFiring && ammo.currentAmmo > 0) // Mermi kontrolü eklendi
+        while (isFiring && ammo.currentAmmo > 0) 
         {
             float timeSinceLastFire = Time.time - lastFireTime;
-            if (timeSinceLastFire >= 1 / setShip.fireRate)
+            if (timeSinceLastFire >= fireCooldown) 
             {
                 FireBullet();
-                ammo.UseAmmo();
+                ammo.UseAmmo(); 
                 lastFireTime = Time.time;
+                fireRateSlider.value = 0; 
             }
             yield return null;
         }
 
-        // Mermi bittiğinde ateş etme işlemini durdur
-        isFiring = false;
         fireCoroutine = null;
     }
 

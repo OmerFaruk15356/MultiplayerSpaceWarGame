@@ -98,7 +98,7 @@ public class MeteorManager : MonoBehaviourPunCallbacks
             meteorPositions.Remove(position);
             photonView.RPC("SyncMeteorPositions", RpcTarget.Others, position, false);
 
-            if (meteorPositions.Count < maxMeteorCount && spawnCoroutine == null)
+            if (meteorPositions.Count < maxMeteorCount && spawnCoroutine == null && gameObject.activeSelf == true)
             {
                 spawnCoroutine = StartCoroutine(SpawnMeteorPeriodically());
             }
