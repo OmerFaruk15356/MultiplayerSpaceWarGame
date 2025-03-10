@@ -30,35 +30,38 @@ public class ShipFire : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            if (ammo.currentAmmo > 0)
+            float elapsedTime = Time.time - lastFireTime;
+            if (Input.GetKeyDown(KeyCode.R) && ammo.currentAmmo < setShip.maxAmmo && !isFiring)
             {
-                float elapsedTime = Time.time - lastFireTime;
-                fireRateSlider.maxValue = fireCooldown; 
-                fireRateSlider.value = Mathf.Clamp(elapsedTime, 0, fireCooldown);
+                ammo.hasAmmo = false;
+                lastFireTime = Time.time;
+                ammo.ReloadAmmo();
+                SetSlider(0,setShip.reloadSpeed);
+            }
+            else if (ammo.hasAmmo)
+            {
                 Fire();
+                SetSlider(elapsedTime,fireCooldown);
             }
             else
             {
-                float elapsedTime = Time.time - lastFireTime;
-                fireRateSlider.maxValue = setShip.reloadSpeed; 
-                fireRateSlider.value = Mathf.Clamp(elapsedTime, 0, setShip.reloadSpeed);
-                ammo.ReloadAmmo();
+                SetSlider(elapsedTime,setShip.reloadSpeed);
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && ammo.currentAmmo < setShip.maxAmmo)
-            {
-                ammo.ReloadAmmo();
-            }
         }
     }
-
+    void SetSlider(float min,float max)
+    {
+        fireRateSlider.maxValue = max; 
+        fireRateSlider.value = Mathf.Clamp(min, 0, max);
+    }
     void Fire()
     {
-        if (isFiring && fireCoroutine == null && ammo.currentAmmo > 0) 
+        if (isFiring && fireCoroutine == null) 
         {
             fireCoroutine = StartCoroutine(FireContinuously());
         }
-        else if ((!isFiring || ammo.currentAmmo <= 0) && fireCoroutine != null) 
+        else if (!isFiring && fireCoroutine != null) 
         {
             StopCoroutine(fireCoroutine);
             fireCoroutine = null;
@@ -67,7 +70,7 @@ public class ShipFire : MonoBehaviourPun
 
     IEnumerator FireContinuously()
     {
-        while (isFiring && ammo.currentAmmo > 0) 
+        while (isFiring && ammo.hasAmmo) 
         {
             float timeSinceLastFire = Time.time - lastFireTime;
             if (timeSinceLastFire >= fireCooldown) 

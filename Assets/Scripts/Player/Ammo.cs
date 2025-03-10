@@ -22,37 +22,37 @@ public class Ammo : MonoBehaviour
         uI.ammoText.text = currentAmmo + " / " + setShip.maxAmmo;
     }
 
-   public void UseAmmo()
-{
-    if (currentAmmo > 0)
+    public void UseAmmo()
     {
-        currentAmmo -= 1;
+        if (currentAmmo - 1 > 0)
+        {
+            currentAmmo -= 1;
+            SetAmmoState();
+        }
+
+        else if (currentAmmo - 1 <= 0) 
+        {
+            hasAmmo = false;
+            ReloadAmmo(); 
+        }
+    }
+
+    public void ReloadAmmo()
+    {
+        if (reloadCoroutine == null & currentAmmo < setShip.maxAmmo)
+        {
+            uI.ammoText.text = "Reloading...";
+            reloadCoroutine = StartCoroutine(StartReload());
+        }
+    }
+
+    IEnumerator StartReload()
+    {
+        yield return new WaitForSeconds(setShip.reloadSpeed);
+        currentAmmo = setShip.maxAmmo;
+        hasAmmo = true;
+        reloadCoroutine = null;
         SetAmmoState();
     }
-
-    if (currentAmmo <= 0) 
-    {
-        hasAmmo = false;
-        ReloadAmmo(); 
-    }
-}
-
-public void ReloadAmmo()
-{
-    if (reloadCoroutine == null & currentAmmo < setShip.maxAmmo)
-    {
-        uI.ammoText.text = "Reloading...";
-        reloadCoroutine = StartCoroutine(StartReload());
-    }
-}
-
-IEnumerator StartReload()
-{
-    yield return new WaitForSeconds(setShip.reloadSpeed);
-    currentAmmo = setShip.maxAmmo;
-    hasAmmo = true;
-    reloadCoroutine = null;
-    SetAmmoState();
-}
 
 }

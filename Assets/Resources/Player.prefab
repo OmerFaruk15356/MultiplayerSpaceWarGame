@@ -1435,7 +1435,7 @@ MonoBehaviour:
   setShip: {fileID: 639772520689643746}
   uI: {fileID: 0}
   currentAmmo: 0
-  hasAmmo: 0
+  hasAmmo: 1
 --- !u!1 &7967568720059022428
 GameObject:
   m_ObjectHideFlags: 0
