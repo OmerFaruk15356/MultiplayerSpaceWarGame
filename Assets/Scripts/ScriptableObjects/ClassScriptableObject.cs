@@ -14,6 +14,7 @@ public class ClassScriptableObject : ScriptableObject
     [SerializeField] float shipSpeed;
     [SerializeField] float acceleration;
     [SerializeField] float deceleration;
+    [SerializeField] float reloadSpeed;
     [SerializeField] int ammo;
 
     public Sprite GetShipSprite()
@@ -55,6 +56,10 @@ public class ClassScriptableObject : ScriptableObject
     public float GetDeceleration()
     {
         return this.deceleration;
+    }
+    public float GetReloadSpeed()
+    {
+        return this.reloadSpeed;
     }
     public int GetAmmo()
     {

@@ -7,6 +7,7 @@ public class MeteorScriptableObjects : ScriptableObject
     [SerializeField] float collisionDamage;
     [SerializeField] float hp;
     [SerializeField] int xp;
+    [SerializeField] int score;
 
     public Sprite GetMeteorSprite()
     {
@@ -23,5 +24,9 @@ public class MeteorScriptableObjects : ScriptableObject
     public int GetXp()
     {
         return xp;
+    }
+    public int GetScore()
+    {
+        return score;
     }
 }

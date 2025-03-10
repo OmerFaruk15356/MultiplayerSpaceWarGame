@@ -16,3 +16,4 @@ MonoBehaviour:
   collisionDamage: 25
   hp: 25
   xp: 25
+  score: 5

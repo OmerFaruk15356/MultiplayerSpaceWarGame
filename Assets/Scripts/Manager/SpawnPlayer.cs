@@ -12,7 +12,7 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
     [SerializeField] float maxX;
     [SerializeField] float minY;
     [SerializeField] float maxY;
-    [SerializeField] float collisionCheckRadius = 0.5f; 
+    [SerializeField] float collisionCheckRadius = 1f; 
     private bool playerSpawned = false;
     public int shipIndex = -1;
 
@@ -24,6 +24,7 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
             ui.SetPanel(1, true);
             ui.SetPanel(2, true);
             ui.SetPanel(3, false);
+            ui.SetPanel(5, true);
             meteorManager.enabled = true;
             while(!playerSpawned)
             {

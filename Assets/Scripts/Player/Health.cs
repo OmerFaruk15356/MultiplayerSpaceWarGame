@@ -6,11 +6,10 @@ using UnityEngine.UI;
 public class Health : MonoBehaviourPun
 {
     [SerializeField] Slider healthBar;
+    [SerializeField] SetShip setShip = null;
     private UI ui;
     public bool isDead = false;
-    private float maxHealth;
     private float currentHealth;
-    private SetShip setShip = null;
 
     private void Start()
     {
@@ -20,24 +19,15 @@ public class Health : MonoBehaviourPun
             Debug.LogError("UI component not found!");
         }
 
-        setShip = gameObject.GetComponent<SetShip>();
-        if (setShip == null)
-        {
-            Debug.LogError("SetShip component not found!");
-        }
-        else
-        {
-            maxHealth = setShip.maxHp;
-            currentHealth = maxHealth;
-            UpdateHealthBar();
-        }
+        currentHealth = setShip.maxHp;
+        UpdateHealthBar();
     }
 
     private void UpdateHealthBar()
     {
         if (healthBar != null)
         {
-            healthBar.value = currentHealth / maxHealth;
+            healthBar.value = currentHealth / setShip.maxHp;
         }
     }
 
@@ -85,6 +75,8 @@ public class Health : MonoBehaviourPun
 
         if (currentHealth <= 0)
         {
+            if (GameLogic.Instance != null)
+            GameLogic.Instance.PlayerKilled(attacker,35);
             Die();
         }
     }
@@ -97,6 +89,7 @@ public class Health : MonoBehaviourPun
             ui.SetPanel(3, true);
             ui.SetPanel(1, false);
             ui.SetPanel(2, false);
+            ui.SetPanel(5, false);
             PhotonNetwork.Destroy(gameObject);
         }
     }

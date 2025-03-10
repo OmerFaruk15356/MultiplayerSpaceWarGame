@@ -22,3 +22,5 @@ MonoBehaviour:
   shipSpeed: 7
   acceleration: 7
   deceleration: 3
+  reloadSpeed: 1.5
+  ammo: 10

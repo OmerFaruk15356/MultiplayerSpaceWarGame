@@ -16,6 +16,8 @@ public class SetShip : MonoBehaviourPunCallbacks
     public float rotationSpeed;
     public float acceleration;
     public float deceleration;
+    public float reloadSpeed;
+    public int maxAmmo;
     private int shipIndex;
 
     [PunRPC]
@@ -38,6 +40,8 @@ public class SetShip : MonoBehaviourPunCallbacks
         rotationSpeed = shipScripts[index].GetRotateSpeed();
         acceleration = shipScripts[index].GetAcceleration();
         deceleration = shipScripts[index].GetDeceleration();
+        maxAmmo = shipScripts[index].GetAmmo();
+        reloadSpeed = shipScripts[index].GetReloadSpeed();
     }
 
     [PunRPC]

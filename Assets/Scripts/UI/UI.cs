@@ -9,6 +9,7 @@ public class UI : MonoBehaviour
     [SerializeField] List<TextMeshProUGUI> statTexts;
     [SerializeField] TextMeshProUGUI statText;
     [SerializeField] TextMeshProUGUI alert;
+    [SerializeField] public TextMeshProUGUI ammoText;
     [SerializeField] public CanvasGroup statsPanel;
     public void SetPanel(int index, bool set)
     {

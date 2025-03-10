@@ -45,6 +45,7 @@ public class Circle : MonoBehaviour
             ui.SetPanel(1, false);
             ui.SetPanel(2,false);
             ui.SetPanel(4,false);
+            ui.SetPanel(5, false);
             PhotonNetwork.Destroy(ship);
         }
     }

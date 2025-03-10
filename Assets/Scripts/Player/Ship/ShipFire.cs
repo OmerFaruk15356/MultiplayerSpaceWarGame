@@ -8,7 +8,7 @@ public class ShipFire : MonoBehaviourPun
     [SerializeField] float ammoSpeed = 10;
     [SerializeField] float ammoDuration = 2;
     [SerializeField] Transform bulletContainer;
-    
+    [SerializeField] Ammo ammo;
     [SerializeField] SetShip setShip;
     public bool isFiring;
     private Coroutine fireCoroutine;
@@ -19,21 +19,25 @@ public class ShipFire : MonoBehaviourPun
         var BulletObject = GameObject.Find("BulletContainer");
         bulletContainer = BulletObject.transform;
     }
-    void LateUpdate()
+
+    void Update()
     {
         if (photonView.IsMine)
         {
-            Fire();
+            if (ammo.currentAmmo > 0)
+                Fire();
+            else
+                ammo.ReloadAmmo();
         }
     }
 
     void Fire()
     {
-        if (isFiring && fireCoroutine == null)
+        if (isFiring && fireCoroutine == null && ammo.currentAmmo > 0) // Mermi kontrolü eklendi
         {
             fireCoroutine = StartCoroutine(FireContinuously());
         }
-        else if (!isFiring && fireCoroutine != null)
+        else if ((!isFiring || ammo.currentAmmo <= 0) && fireCoroutine != null) // Mermi kontrolü eklendi
         {
             StopCoroutine(fireCoroutine);
             fireCoroutine = null;
@@ -42,16 +46,21 @@ public class ShipFire : MonoBehaviourPun
 
     IEnumerator FireContinuously()
     {
-        while (isFiring)
+        while (isFiring && ammo.currentAmmo > 0) // Mermi kontrolü eklendi
         {
             float timeSinceLastFire = Time.time - lastFireTime;
             if (timeSinceLastFire >= 1 / setShip.fireRate)
             {
                 FireBullet();
+                ammo.UseAmmo();
                 lastFireTime = Time.time;
             }
             yield return null;
         }
+
+        // Mermi bittiğinde ateş etme işlemini durdur
+        isFiring = false;
+        fireCoroutine = null;
     }
 
     private void FireBullet()

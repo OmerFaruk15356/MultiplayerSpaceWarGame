@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Meteor : MonoBehaviourPun
 {
@@ -8,6 +9,7 @@ public class Meteor : MonoBehaviourPun
     [SerializeField] SpriteRenderer meteorSprite;
     private float meteorHp;
     private int xp;
+    private int score;
     public float collisionDamage;
 
     private MeteorManager meteorManager;
@@ -24,6 +26,7 @@ public class Meteor : MonoBehaviourPun
         meteorHp = meteors[index].GetHp();
         collisionDamage = meteors[index].GetCollisionDamage();
         xp = meteors[index].GetXp();
+        score = meteors[index].GetScore();
         gameObject.AddComponent<PolygonCollider2D>();
         if(index == 1)
         gameObject.transform.localScale *= 0.75f;
@@ -36,7 +39,7 @@ public class Meteor : MonoBehaviourPun
         if (meteorHp <= 0)
         {
             if (GameLogic.Instance != null)
-                GameLogic.Instance.MeteorKilled(attackerViewID, xp);
+                GameLogic.Instance.MeteorKilled(attackerViewID, xp,score);
 
             if (photonView.IsMine) 
             {

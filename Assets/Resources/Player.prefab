@@ -1171,6 +1171,7 @@ MonoBehaviour:
   ammoSpeed: 20
   ammoDuration: 2
   bulletContainer: {fileID: 0}
+  ammo: {fileID: 2447184917398641031}
   setShip: {fileID: 639772520689643746}
   isFiring: 0
 --- !u!114 &7769686678184312918
@@ -1238,6 +1239,8 @@ MonoBehaviour:
   rotationSpeed: 0
   acceleration: 0
   deceleration: 0
+  reloadSpeed: 0
+  maxAmmo: 0
 --- !u!114 &3314528846180288763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,6 +1254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2954209413751330936}
+  setShip: {fileID: 639772520689643746}
   isDead: 0
 --- !u!114 &1756875858831869457
 MonoBehaviour:
@@ -1315,7 +1319,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0946091247e8f9408692fb71102dddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setShip: {fileID: 0}
+  setShip: {fileID: 639772520689643746}
+  uI: {fileID: 0}
+  currentAmmo: 0
+  hasAmmo: 0
 --- !u!1 &8520897952733130937
 GameObject:
   m_ObjectHideFlags: 0

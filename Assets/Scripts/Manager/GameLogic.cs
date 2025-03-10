@@ -20,20 +20,20 @@ public class GameLogic : MonoBehaviourPunCallbacks
         }
     }
 
-    public void PlayerKilled(Player victim, Player attacker)
+    public void PlayerKilled(Player attacker,int score)
     {
-        if (attacker != null && attacker != victim)
+        if (attacker != null)
         {
-            scoreboard.AddScore(attacker, 10);
+            scoreboard.AddScore(attacker, score);
         }
     }
 
-    public void MeteorKilled(int attackerViewID,int xp)
+    public void MeteorKilled(int attackerViewID,int xp,int score)
     {
         PhotonView attackerPhotonView = PhotonView.Find(attackerViewID);
         if (attackerPhotonView != null)
         {
-            scoreboard.AddScore(attackerPhotonView.Owner, 10);
+            scoreboard.AddScore(attackerPhotonView.Owner, score);
             attackerPhotonView.gameObject.GetComponent<Level>().SetXp(xp);
         }
     }
