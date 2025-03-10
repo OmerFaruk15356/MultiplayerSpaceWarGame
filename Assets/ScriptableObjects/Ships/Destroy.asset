@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db2397952f5af484493b19775e6671e5, type: 3}
+  m_Name: Destroy
+  m_EditorClassIdentifier: 
+  shipSprite: {fileID: 21300000, guid: e4ee5b4ef73b29346b5b7e16d95b9995, type: 3}
+  bulletSprite: {fileID: 21300000, guid: 500c35d26fcdef84eb10cd07121da2dd, type: 3}
+  bulletDamage: 75
+  collisionDamage: 25
+  fireRate: 0.5
+  maxHp: 150
+  rotateSpeed: 150
+  shipSpeed: 6
+  acceleration: 6
+  deceleration: 4
