@@ -34,7 +34,7 @@ public class ShipFire : MonoBehaviourPun
         if (photonView.IsMine)
         {
             float elapsedTime = Time.time - lastFireTime;
-            if (Input.GetKeyDown(KeyCode.R) && ammo.currentAmmo < setShip.maxAmmo && fireRateSlider.value == fireRateSlider.maxValue)
+            if (Input.GetKeyDown(KeyCode.R) && ammo.currentAmmo < setShip.maxAmmo && fireRateSlider.value == fireRateSlider.maxValue && !isFiring)
             {
                 ammo.hasAmmo = false;
                 lastFireTime = Time.time;
