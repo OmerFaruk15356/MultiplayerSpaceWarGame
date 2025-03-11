@@ -1055,8 +1055,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 1912821256}
   alert: {fileID: 57567572}
-  playerPrefab: {fileID: 7769686678184312912, guid: b5eb6839983f3f8408b82700d8142b7a, type: 3}
   meteorManager: {fileID: 872074001}
+  playerPrefab: {fileID: 7769686678184312912, guid: b5eb6839983f3f8408b82700d8142b7a, type: 3}
   minX: -10
   maxX: 10
   minY: -10
@@ -2754,7 +2754,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872074000}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b58b4e652c587fc47b7ff4304ff582f4, type: 3}
   m_Name: 

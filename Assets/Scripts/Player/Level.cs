@@ -91,31 +91,37 @@ public class Level : MonoBehaviour
 
     public void GetLevelUp(int index) {
 
-        photonView.RPC("SetLevelUp",RpcTarget.AllBuffered, index);
-        statPoint--;
-        uI.SetStats(statPoint,photonView);
-        if(statPoint == 0)
+        if(photonView.IsMine)
         {
-            state = true;
-            SetStatPanel();
+            photonView.RPC("SetLevelUp",RpcTarget.AllBuffered, index);
+            statPoint--;
+            uI.SetStats(statPoint,photonView);
+            if(statPoint == 0)
+            {
+                state = true;
+                SetStatPanel();
+            }
         }
     }
 
     private void SetStatPanel()
     {
-        statsPanel.alpha = state ? 1 : 0;
-        statsPanel.blocksRaycasts = state;
-        foreach (GameObject button in buttonObjects)
+        if(photonView.IsMine)
         {
-            if(statPoint > 0)
+            statsPanel.alpha = state ? 1 : 0;
+            statsPanel.blocksRaycasts = state;
+            foreach (GameObject button in buttonObjects)
             {
-                button.SetActive(true);
+                if(statPoint > 0)
+                {
+                    button.SetActive(true);
+                }
+                else
+                {
+                    button.SetActive(false);
+                }
             }
-            else
-            {
-                button.SetActive(false);
-            }
+            uI.SetStats(statPoint,photonView);
         }
-        uI.SetStats(statPoint,photonView);
     }
 }

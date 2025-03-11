@@ -22,6 +22,9 @@ public class ShipFire : MonoBehaviourPun
         var BulletObject = GameObject.Find("BulletContainer");
         bulletContainer = BulletObject.transform;
 
+        if(photonView.IsMine)
+        fireRateSlider.gameObject.SetActive(true);
+
         fireCooldown = 1 / setShip.fireRate; 
         fireRateSlider.value = 0; 
     }

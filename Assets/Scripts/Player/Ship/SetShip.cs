@@ -27,7 +27,7 @@ public class SetShip : MonoBehaviourPunCallbacks
         SetShipAttributes(shipIndex);
     }
 
-    private void SetShipAttributes(int index)
+    public void SetShipAttributes(int index)
     {
         shipSprite = shipScripts[index].GetShipSprite();
         gameObject.GetComponentInChildren<SpriteRenderer>().sprite = shipSprite;

@@ -6,8 +6,8 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
 {
     [SerializeField] UI ui;
     [SerializeField] TextMeshProUGUI alert;
-    [SerializeField] GameObject playerPrefab;
     [SerializeField] MeteorManager meteorManager;
+    [SerializeField] GameObject playerPrefab;
     [SerializeField] float minX;
     [SerializeField] float maxX;
     [SerializeField] float minY;
@@ -20,12 +20,6 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
     {
         if (shipIndex != -1)
         {
-            ui.SetPanel(0, false);
-            ui.SetPanel(1, true);
-            ui.SetPanel(2, true);
-            ui.SetPanel(3, false);
-            ui.SetPanel(5, true);
-            meteorManager.enabled = true;
             while(!playerSpawned)
             {
                 Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
@@ -38,6 +32,7 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
                 }
             }
             playerSpawned = false;
+            SetPanels();
         }
         else
         {
@@ -45,6 +40,15 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
             alert.text = "CHOOSE A CLASS";
             ui.Invoke("StopAlert", 1f);
         }
+    }
+
+    private void SetPanels()
+    {
+        ui.SetPanel(0, false);
+        ui.SetPanel(1, true);
+        ui.SetPanel(2, true);
+        ui.SetPanel(3, false);
+        ui.SetPanel(5, true);
     }
 
     bool IsPositionValid(Vector2 position)
