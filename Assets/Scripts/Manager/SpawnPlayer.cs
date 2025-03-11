@@ -27,7 +27,6 @@ public class SpawnPlayer : MonoBehaviourPunCallbacks
                 {
                     GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
                     player.GetComponent<PhotonView>().RPC("_SetShip", RpcTarget.AllBuffered, shipIndex);
-                    player.transform.GetChild(0).gameObject.AddComponent<PolygonCollider2D>();
                     playerSpawned = true;
                 }
             }

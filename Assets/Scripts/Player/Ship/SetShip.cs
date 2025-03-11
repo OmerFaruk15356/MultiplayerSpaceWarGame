@@ -42,6 +42,7 @@ public class SetShip : MonoBehaviourPunCallbacks
         deceleration = shipScripts[index].GetDeceleration();
         maxAmmo = shipScripts[index].GetAmmo();
         reloadSpeed = shipScripts[index].GetReloadSpeed();
+        transform.GetChild(0).gameObject.AddComponent<PolygonCollider2D>();
     }
 
     [PunRPC]
